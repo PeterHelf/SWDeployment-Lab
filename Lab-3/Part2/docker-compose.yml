@@ -1,0 +1,31 @@
+
+version: '3.3'
+
+services:
+   db:
+     image: kaaras/mysql
+     restart: always
+     ports:
+        - "3306:3306"
+     volumes:
+       - type: volume
+         source: dbdata
+         target: /var/lib/mysql
+   wordpress:
+     depends_on:
+       - db
+     image: kaaras/wordpress
+     ports:
+       - "80:80"
+     restart: always
+     volumes:
+       - type: volume
+         source: wpconfig
+         target: /etc/wordpress/
+       - type: volume
+         source: wpuploads
+         target: /var/www/html/wp-content/uploads/
+volumes:
+    dbdata:
+    wpconfig:
+    wpuploads:
