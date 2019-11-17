@@ -10,6 +10,10 @@ services:
        - type: volume
          source: dbdata
          target: /var/lib/mysql
+     environment:
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wordpress
+       MYSQL_PASSWORD: wordpress
    wordpress:
      depends_on:
        - db
@@ -17,6 +21,11 @@ services:
      ports:
        - "8080:80"
      restart: always
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: wordpress
+       WORDPRESS_DB_PASSWORD: wordpress
+       WORDPRESS_DB_NAME: wordpress
      volumes:
        - type: volume
          source: wpconfig
